@@ -217,6 +217,9 @@ Each row in `data/experiment_results.csv` contains:
 | File | SHA-256 |
 |------|---------|
 | `data/experiment_results.csv` | `17a2eea25d64dd79475ce9ef4847e1a7ce2a0ec544bf9806ac9b92f31775786d` |
+| Internal `experiment_results.jsonl` (not published) | `f3ed3b83cf8edb643d82191705d155de6455834b63e2f767dedcd40a55cecd91` |
+
+The CSV was derived from the JSONL by `analysis/export_data.py` (strips `cost_usd`, `response`, `stdout`, `stderr`, `eval.details`). The JSONL hash is provided so that anyone with access to the raw data can verify the derivation.
 
 To verify:
 ```bash

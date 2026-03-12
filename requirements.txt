@@ -1,7 +1,8 @@
-pandas>=2.0
-matplotlib>=3.7
-seaborn>=0.12
-numpy>=1.24
-pyyaml>=6.0
-anthropic>=0.40
+# Exact versions used in the original experiment (pip freeze)
+pandas==2.3.3
+matplotlib==3.10.8
+seaborn==0.13.2
+numpy==2.2.6
+pyyaml==6.0.3
+anthropic==0.84.0
 openai>=1.50
