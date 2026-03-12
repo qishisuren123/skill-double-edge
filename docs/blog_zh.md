@@ -196,7 +196,7 @@
 
 ## 开源
 
-完整数据和代码已开源：**[GitHub: skill-bench](https://github.com/renyiming/skill-bench)**
+完整数据和代码已开源：**[GitHub: skill-double-edge](https://github.com/qishisuren123/skill-double-edge)**
 
 包含：
 - 1,620 条实验结果（CSV 格式）

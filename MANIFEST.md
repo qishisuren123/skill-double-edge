@@ -7,11 +7,14 @@ This section clarifies the relationship between the **internal experiment codeba
 | Asset | Internal | Public (this repo) | Notes |
 |-------|----------|---------------------|-------|
 | Scenario definitions | 100 | 10 (examples) | Internal set covers 15+ scientific domains |
-| Skill packages | 51 | 5 (examples) | Each with SKILL.md, scripts/, references/ |
+| Skill packages | 51 | 8 (examples) | 5 from experiments + 3 from generated-skills showcase |
+| Skill generators | 2 | 2 | conversation-to-skill + requirement-to-skill |
 | Scenarios in main experiment | **30** | 30 (all results) | `data/experiment_results.csv` covers all 30 |
 | Models | 6 | 6 (all results) | All 6 model results are published |
 | Conditions | 15 | 15 (all results) | All conditions are published |
 | Total trials | **1,620** | **1,620** (all results) | Every trial result is published |
+| Pilot study reports | 2 | 2 | Pilot findings + three-system comparison |
+| Deep dive analysis | — | 1 | The 7 paradoxes document |
 | Raw LLM responses | 1,620 | 0 | Excluded (contain generated code, too large) |
 | Cost log | 1,620 entries | 0 | Excluded (sensitive) |
 | API config | 1 | 0 | Excluded (contains API key) |

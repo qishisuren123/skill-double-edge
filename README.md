@@ -1,26 +1,45 @@
 <div align="center">
 
-# SkillBench
+# Skill-Double-Edge
 
-### When Do LLM Skills Actually Help? A Systematic Study
+### Skills Are a Double-Edged Sword for LLM Code Generation
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Trials](https://img.shields.io/badge/Trials-1%2C620-blue.svg)](#experiment-design)
 [![Models](https://img.shields.io/badge/Models-6-orange.svg)](#experiment-design)
 [![Scenarios](https://img.shields.io/badge/Scenarios-30-purple.svg)](#experiment-design)
+[![Cost](https://img.shields.io/badge/Cost-%24129-red.svg)](#experiment-design)
 
-*We spent $129 running 1,620 controlled experiments to answer a simple question:*
-***Do "skills" (structured knowledge packages) actually improve LLM code generation?***
+*We spent $129 running 1,620 controlled experiments across 6 LLMs and found:*
 
-**TL;DR — It depends on the model.**
+**Skills help weak models gain +18pp — but the exact same skills make them lose -100pp in other scenarios.**
+**Strong models are immune to skills — but most vulnerable to skill poisoning.**
 
 </div>
 
 ---
 
-## Key Findings
+## The Seven Paradoxes
 
-### 1. Skills help all models — but the strongest gains come from the lightest touch
+Our experiments reveal a series of counter-intuitive findings about how LLM skills actually work:
+
+| # | Paradox | Finding |
+|---|---------|---------|
+| 1 | **Skill Paradox** | Weak models are simultaneously the biggest beneficiary (+100pp) AND the biggest victim (-100pp) of skills |
+| 2 | **Exact-match Danger** | A skill written *for the exact task* is more dangerous than a completely unrelated skill |
+| 3 | **Poison Sensitivity** | The strongest model (Opus) is *most* vulnerable to poisoned skills, not least |
+| 4 | **Author Toxicity** | Skill toxicity depends on the specific author-user combination (Opus→Sonnet: fatal; Haiku→Sonnet: safe) |
+| 5 | **Partial > Full Danger** | Showing half a skill can be more dangerous than showing the whole thing |
+| 6 | **Vaccination Backfire** | Adding "please be critical" helps weak models but *hurts* strong ones (-16pp) |
+| 7 | **Import Lethality** | Models tolerate logic errors, stale APIs, wrong defaults — but wrong `import` statements are universally fatal |
+
+> **Deep dive:** [docs/deep_dive_paradoxes.md](docs/deep_dive_paradoxes.md) — detailed tables and root cause analysis for each paradox.
+
+---
+
+## Main Results
+
+### RQ1: How does skill completeness affect performance?
 
 <img src="figures/fig_rq1_heatmap.png" width="700">
 
@@ -28,7 +47,7 @@
 - **Opus benefits least**: +8.8pp — already strong without help
 - **L1 (just SKILL.md text) captures most of the gain** — scripts and references provide diminishing returns
 
-### 2. Models are surprisingly tolerant of skill errors — except `wrong_import`
+### RQ2: How tolerant are models to skill errors?
 
 <img src="figures/fig_rq2_tolerance.png" width="700">
 
@@ -36,7 +55,7 @@
 - `wrong_import` is the **fatal mutation**: GPT-4o drops -40pp, GPT-4.1 drops -20pp
 - **Opus is the only model immune** to wrong imports (+9pp, actually benefits!)
 
-### 3. Wrong skills hurt, vaccination has mixed effects
+### RQ3: What happens with wrong skills and "vaccination"?
 
 <img src="figures/fig_rq3_conditions.png" width="700">
 
@@ -44,18 +63,17 @@
 - "Vaccination" (adding a warning prefix) **helps weak models** recover but **hurts Opus** (-16pp)
 - Strong models already have good judgment — extra instructions add noise
 
-### 4. The bigger picture
+### Overview: Does adding a skill help?
 
 <img src="figures/fig_overview.png" width="600">
 
-Each dot is one (model, scenario) pair. Points above the diagonal = skill helped.
-Most points cluster above the line — **skills generally help**, especially for hard scenarios where baseline is low.
+Each dot = one (model, scenario) pair. Above diagonal = skill helped. Most points cluster above — **skills generally help**, especially for hard scenarios (low baseline).
 
 ---
 
 ## What is a "Skill"?
 
-In Claude Code and similar AI coding tools, a **skill** is a structured knowledge package that provides domain-specific guidance to an LLM. A typical skill contains:
+In Claude Code and similar AI coding tools, a **skill** is a structured knowledge package that provides domain-specific guidance. We test 5 completeness levels:
 
 | Level | Contents | Description |
 |-------|----------|-------------|
@@ -65,8 +83,6 @@ In Claude Code and similar AI coding tools, a **skill** is a structured knowledg
 | L3 | + `references/` | API docs, examples, edge cases |
 | L4 | All of the above | Full skill package |
 
-We test whether these components actually help LLMs write correct, executable code for **30 scientific computing tasks** across 15+ domains.
-
 ---
 
 ## Experiment Design
@@ -74,160 +90,188 @@ We test whether these components actually help LLMs write correct, executable co
 | Parameter | Value |
 |-----------|-------|
 | **Models** | Haiku 3.5, GPT-4o, GPT-4.1, Gemini 2.0 Pro, Sonnet 3.5, Opus 3.5 |
-| **Scenarios** | 30 scientific computing tasks (neuroscience, astronomy, genomics, ...) |
-| **Conditions** | 15 (5 skill levels × clean + 5 mutation types + 4 RQ3 conditions) |
+| **Scenarios** | 30 scientific computing tasks across 15+ domains |
+| **Conditions** | 15 (5 skill levels + 6 mutation types + 4 robustness conditions) |
 | **Total Trials** | 1,620 |
 | **Total Cost** | $129.05 |
-| **Evaluation** | Automated: L1 (runs?) + L2 (correct output?) test suites per scenario |
+| **Evaluation** | Automated test suites: 5–15 assertions per scenario |
+| **Temperature** | 0.0 (deterministic) |
+| **Seed** | 42 (for mutations) |
 
-### Three Research Questions
+Three research questions, non-overlapping trial allocation:
 
-- **RQ1** — *Skill Completeness*: How much does each level (L0–L4) improve performance?
-- **RQ2** — *Error Tolerance*: How do models handle buggy skills (logic errors, wrong imports, stale APIs)?
-- **RQ3** — *Wrong Skills & Vaccination*: What happens with mismatched skills, and can a warning prefix help?
+| RQ | Focus | Trials |
+|----|-------|--------|
+| RQ1 | Skill Completeness (L0–L4) | 6 × 30 × 5 = 900 |
+| RQ2 | Error Tolerance (5 mutations + clean) | 6 × 10 × 6 = 360 |
+| RQ3 | Wrong Skills & Vaccination | 6 × 15 × 4 = 360 |
+| **Total** | | **1,620** |
+
+> **Full details:** [MANIFEST.md](MANIFEST.md) — model versions, prompt template, skill injection format, evaluation pipeline, result schema, coverage tables, SHA-256 hashes.
 
 ---
 
 ## Repository Structure
 
 ```
-skill-bench/
+skill-double-edge/
 ├── README.md
-├── MANIFEST.md                  # Dataset card: what's included, coverage table
-├── LICENSE
-├── requirements.txt             # Pinned dependencies
-├── run_benchmark.py             # Reproduce the full experiment
+├── MANIFEST.md                    # Dataset card & reproducibility protocol
+├── run_benchmark.py               # Re-run the full experiment
+├── requirements.txt
+│
 ├── data/
-│   ├── experiment_results.csv    # 1,620 trial results (sanitized)
-│   └── scenarios_meta.csv        # 30 scenario metadata
-├── figures/                      # Generated analysis charts
-├── scenarios/                    # 10 example scenarios with test suites
-├── skills/                       # 5 example skill packages
+│   ├── experiment_results.csv     # All 1,620 trial results
+│   └── scenarios_meta.csv         # 30 scenario metadata
+├── figures/                       # 4 publication-ready charts
+│
+├── scenarios/                     # 10 example scenarios + test suites
+├── skills/                        # 8 example skill packages
+│   ├── S002_spike_behavior/       #   (5 from experiment scenarios)
+│   ├── S012_uv_spectroscopy/
+│   ├── fits-aperture-photometry/  #   (3 from generated-skills showcase)
+│   ├── spatial-transcriptomics-preprocess/
+│   └── swissprot-protein-parser/
+│
+├── tools/                         # Skill generation tools
+│   ├── conversation-to-skill/     #   Extract skill from chat logs
+│   └── requirement-to-skill/      #   Generate skill from text requirements
+│
 ├── analysis/
-│   ├── generate_figures.py       # Reproduce all figures
-│   ├── stats_summary.py          # Print statistical summary
-│   └── export_data.py            # JSONL → CSV conversion
+│   ├── generate_figures.py        # Reproduce all charts
+│   ├── stats_summary.py           # Statistical summary
+│   └── export_data.py             # Data conversion utilities
+│
 └── docs/
-    └── blog_zh.md                # Chinese blog post (中文博客)
+    ├── blog_zh.md                 # 中文博客 (Chinese blog post)
+    ├── deep_dive_paradoxes.md     # The 7 paradoxes in detail
+    └── reports/
+        ├── pilot_report_v2.md     # Pilot findings (10 scenarios × 6 models)
+        └── comparison_report.md   # Three skill-generator systems compared
 ```
 
-> **Note:** This repo publishes *results and examples*, not the full internal experiment codebase (100 scenarios, 51 skills). See [MANIFEST.md](MANIFEST.md) for a precise breakdown of what's included vs. what was used internally.
+> **Scope:** This repo publishes all 1,620 trial results, 10 example scenarios, 8 skill packages, and 2 skill generators. The internal codebase has 100 scenarios and 51 skills; see [MANIFEST.md](MANIFEST.md) for the full breakdown.
 
 ---
 
 ## Quick Start
 
+```bash
+pip install -r requirements.txt
+```
+
 ### Reproduce the figures
 
 ```bash
-pip install -r requirements.txt
-
 cd analysis
 python generate_figures.py --data ../data/experiment_results.csv --outdir ../figures
 ```
 
-### Re-run the benchmark (requires API access)
+### Re-run the benchmark
 
 ```bash
-# Dry run — shows what would be executed without calling any API
+# Dry run — shows what would be executed
 python run_benchmark.py --dry-run
 
-# Run a subset (e.g., 2 models × 3 scenarios × RQ1 only)
-python run_benchmark.py \
-  --models haiku,gpt4o \
-  --scenarios S002_spike_behavior,S012_uv_spectroscopy,S017_ctd_ocean \
-  --rq rq1 \
-  --api-base "https://api.anthropic.com" \
-  --api-key "$ANTHROPIC_API_KEY"
+# Run a subset
+python run_benchmark.py --rq rq1 --models haiku,gpt4o \
+    --scenarios S002_spike_behavior,S012_uv_spectroscopy \
+    --api-base "https://api.anthropic.com" --api-key "$KEY"
 
-# Full reproduction (warning: ~$130, ~1620 API calls)
+# Full reproduction (~$130)
 python run_benchmark.py --rq all --api-base "..." --api-key "..."
 ```
 
-See [MANIFEST.md](MANIFEST.md) for the full reproducibility protocol (seeds, model versions, prompt template, etc.).
-
-### Print statistics summary
+### Explore a scenario + skill
 
 ```bash
-python analysis/stats_summary.py --data data/experiment_results.csv
+cat scenarios/S012_uv_spectroscopy/task.md              # Task spec
+cat skills/S012_uv_spectroscopy/direct/SKILL.md         # Skill guidance
+python scenarios/S012_uv_spectroscopy/test_script.py    # Evaluation
 ```
 
-### Explore a scenario
-
-Each scenario contains a task description and an automated test suite:
+### Generate skills from scratch
 
 ```bash
-cat scenarios/S012_uv_spectroscopy/task.md          # What the LLM must implement
-cat scenarios/S012_uv_spectroscopy/scenario.yaml     # Metadata (domain, difficulty, packages)
-python scenarios/S012_uv_spectroscopy/test_script.py # Automated evaluation
-```
-
-### Explore a skill package
-
-```bash
-cat skills/S012_uv_spectroscopy/direct/SKILL.md      # Guidance text
-cat skills/S012_uv_spectroscopy/direct/scripts/main.py  # Reference implementation
-cat skills/S012_uv_spectroscopy/direct/references/      # API notes & examples
+# See tools/conversation-to-skill/ or tools/requirement-to-skill/
+cat tools/requirement-to-skill/SKILL.md  # How the skill generator works
 ```
 
 ---
 
 ## Practical Takeaways
 
-For **skill/prompt designers**:
-1. **SKILL.md alone gets you 80% of the benefit** — invest in clear natural language descriptions first
-2. **Never include wrong imports** — it's the only fatal error type. Double-check your `import` statements
-3. **Keep skills fresh** — stale APIs don't hurt (models adapt), but wrong package names kill
-4. **Skip "vaccination" for strong models** — warning prefixes add noise; trust the model's judgment
+**For skill/prompt designers:**
+1. **SKILL.md alone gets you 80% of the benefit** — invest in clear text first
+2. **Never include wrong imports** — the only fatal error type. Always validate.
+3. **Skip "vaccination" for strong models** — warning prefixes add noise
+4. **Be careful with expert-level API choices** — they can poison weaker consumers
 
-For **tool builders**:
-1. **Weaker models benefit most from skills** — prioritize skill support for cost-effective models
-2. **Partial skills are fine** — L1 text-only skills are almost as good as full packages
-3. **Build import validation** — a simple static check could prevent the most damaging error type
+**For tool builders:**
+1. **Weaker models benefit most** — prioritize skill support for cost-effective models
+2. **Build import validation** — a simple static check prevents the worst failures
+3. **L1 text-only skills are nearly as effective as full packages** — simplify your skill format
+
+**For researchers:**
+1. **Skill safety is model-dependent** — findings for one model don't transfer
+2. **Exact-match is more dangerous than near-miss** — overturns intuitive assumptions
+3. **Instruction-following ability is a double-edged sword** — it enables both knowledge transfer and knowledge poisoning
+
+---
+
+## Also in This Repo
+
+| Resource | Description |
+|----------|-------------|
+| [docs/deep_dive_paradoxes.md](docs/deep_dive_paradoxes.md) | The 7 paradoxes with detailed tables and root cause analysis |
+| [docs/blog_zh.md](docs/blog_zh.md) | 中文博客：完整分析 + 对实践者的建议 |
+| [docs/reports/pilot_report_v2.md](docs/reports/pilot_report_v2.md) | Pilot study: 10 scenarios × 6 models, cross-model toxicity, poison experiments |
+| [docs/reports/comparison_report.md](docs/reports/comparison_report.md) | Three skill-generator systems compared (all achieve 100% practical pass rate) |
+| [tools/](tools/) | Two skill generators: conversation-to-skill and requirement-to-skill |
 
 ---
 
 ## Citation
 
-If you use SkillBench data or methodology in your work:
-
 ```
-@misc{skillbench2026,
-  title={SkillBench: When Do LLM Skills Actually Help?},
-  author={SkillBench Authors},
+@misc{skilldoubleedge2026,
+  title={Skills Are a Double-Edged Sword for LLM Code Generation},
+  author={Skill-Double-Edge Authors},
   year={2026},
-  url={https://github.com/qishisuren123/skill-bench}
+  url={https://github.com/qishisuren123/skill-double-edge}
 }
 ```
 
----
-
 ## License
 
-This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
+MIT — see [LICENSE](LICENSE).
 
 ---
 
 <details>
 <summary><b>中文摘要 (Chinese Summary)</b></summary>
 
-## SkillBench: LLM 技能包究竟什么时候有用？
+## LLM 技能包是一把双刃剑
 
-我们花了 **$129** 运行了 **1,620 组对照实验**，系统性地测试了 "技能包"（Skill）对 6 个主流 LLM 在 30 个科学计算任务上的效果。
+我们花了 **$129** 运行了 **1,620 组对照实验**，发现了一系列关于 LLM 技能包的反直觉结论：
 
-### 核心发现
+### 七个悖论
 
-1. **技能对所有模型都有帮助**，但 GPT-4o 获益最大（+18.2pp），Opus 获益最少（+8.8pp）
-2. **仅 SKILL.md 文本就能获得大部分提升**——脚本和参考文档的增量收益递减
-3. **模型对大多数技能错误有强容错性**，但 `wrong_import`（错误的导入语句）是致命的：GPT-4o 直降 40pp
-4. **"免疫"前缀对弱模型有用，对强模型反而有害**——强模型已有足够判断力，额外指令只增加噪声
+1. **技能悖论**：弱模型同时是技能的最大受益者（+100pp）和最大受害者（-100pp）
+2. **精确匹配更危险**：精确匹配的技能比错误领域的技能更危险
+3. **强模型对毒化最敏感**：Opus 被毒化技能从 5/6 打到 0/6，而 Haiku 只掉 1 分
+4. **作者特异性毒性**：同一个技能，不同作者写的对不同使用者产生截然不同的效果
+5. **部分 > 完整的危险**：只给一半技能可能比给完整技能更危险
+6. **免疫反噬**：告诉强模型"请批判性参考"反而让它变差（-16pp）
+7. **唯一致命错误**：模型能容忍逻辑错误、过时 API、错误默认值，但 `wrong_import` 是致命的
 
-### 对实践者的建议
+### 实践建议
 
-- 优先写好 SKILL.md 的自然语言描述，这是性价比最高的投入
-- 务必检查技能包中的 import 语句——这是唯一能造成灾难性后果的错误
-- 弱模型 + 技能包 是性价比最高的组合
+- **写好 SKILL.md 就够了**——80% 的收益来自自然语言描述
+- **务必检查 import 语句**——唯一致命的错误类型
+- **弱模型 + 技能 = 性价比之王**
+- **强模型不需要免疫前缀**——信任它的判断
 
-详细中文分析见 [docs/blog_zh.md](docs/blog_zh.md)
+详细中文分析：[docs/blog_zh.md](docs/blog_zh.md)
 
 </details>
