@@ -93,7 +93,10 @@ We test whether these components actually help LLMs write correct, executable co
 ```
 skill-bench/
 ├── README.md
+├── MANIFEST.md                  # Dataset card: what's included, coverage table
 ├── LICENSE
+├── requirements.txt             # Pinned dependencies
+├── run_benchmark.py             # Reproduce the full experiment
 ├── data/
 │   ├── experiment_results.csv    # 1,620 trial results (sanitized)
 │   └── scenarios_meta.csv        # 30 scenario metadata
@@ -108,6 +111,8 @@ skill-bench/
     └── blog_zh.md                # Chinese blog post (中文博客)
 ```
 
+> **Note:** This repo publishes *results and examples*, not the full internal experiment codebase (100 scenarios, 51 skills). See [MANIFEST.md](MANIFEST.md) for a precise breakdown of what's included vs. what was used internally.
+
 ---
 
 ## Quick Start
@@ -115,11 +120,31 @@ skill-bench/
 ### Reproduce the figures
 
 ```bash
-pip install pandas matplotlib seaborn numpy
+pip install -r requirements.txt
 
 cd analysis
 python generate_figures.py --data ../data/experiment_results.csv --outdir ../figures
 ```
+
+### Re-run the benchmark (requires API access)
+
+```bash
+# Dry run — shows what would be executed without calling any API
+python run_benchmark.py --dry-run
+
+# Run a subset (e.g., 2 models × 3 scenarios × RQ1 only)
+python run_benchmark.py \
+  --models haiku,gpt4o \
+  --scenarios S002_spike_behavior,S012_uv_spectroscopy,S017_ctd_ocean \
+  --rq rq1 \
+  --api-base "https://api.anthropic.com" \
+  --api-key "$ANTHROPIC_API_KEY"
+
+# Full reproduction (warning: ~$130, ~1620 API calls)
+python run_benchmark.py --rq all --api-base "..." --api-key "..."
+```
+
+See [MANIFEST.md](MANIFEST.md) for the full reproducibility protocol (seeds, model versions, prompt template, etc.).
 
 ### Print statistics summary
 
@@ -171,7 +196,7 @@ If you use SkillBench data or methodology in your work:
   title={SkillBench: When Do LLM Skills Actually Help?},
   author={SkillBench Authors},
   year={2026},
-  url={https://github.com/renyiming/skill-bench}
+  url={https://github.com/qishisuren123/skill-bench}
 }
 ```
 
