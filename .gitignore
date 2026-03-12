@@ -1,0 +1,27 @@
+# Dependencies
+__pycache__/
+*.pyc
+*.pyo
+.Python
+env/
+venv/
+*.egg-info/
+
+# Sensitive files
+config.py
+.env
+*.key
+cost_log.jsonl
+
+# Raw experiment data (too large)
+results/raw/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

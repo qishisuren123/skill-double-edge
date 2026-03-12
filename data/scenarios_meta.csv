@@ -1,0 +1,391 @@
+scenario_id,name,domain,difficulty,source,required_packages,task_description,n_tests
+S001_neuro_metadata,neuro_metadata,neuroscience,easy,real,"h5py, numpy, scipy","Write a standalone Python CLI script that recursively scans a directory containing HDF5 (.h5) and MATLAB (.mat) files from a neuroscience experiment, extracts internal structure metadata (dataset path...",0
+S002_spike_behavior,spike_behavior,neuroscience,hard,real,"h5py, numpy, scipy","Write a Python CLI script that standardizes neural spike and behavior data into a unified trial-based HDF5 file.
+
+Input: A MATLAB .mat file containing:
+- spike_times: a (1, N_units) cell array where e...",0
+S003_spatial_tx,spatial_tx,life_science,medium,real,"numpy, pandas","Write a Python CLI script for preprocessing spatial transcriptomics count data.
+
+Input: A CSV file where rows are spots (spatial locations) and columns are genes. The first column is spot_id, and ther...",0
+S004_satellite,satellite,earth_science,medium,real,"numpy, pandas, scipy","Write a Python CLI script to preprocess satellite brightness temperature data stored in NetCDF format.
+
+Input: A NetCDF file with variables:
+- brightness_temp: (n_scanlines, n_pixels) float32 array
+- ...",0
+S005_protein_parse,protein_parse,life_science,medium,real,pandas,"Write a Python CLI script to parse SwissProt protein entries from a JSON file and extract structured information.
+
+Input: A JSON file containing a list of protein entries, each with fields like:
+- acc...",0
+S006_gene_expression,gene_expression,life_science,hard,real,"numpy, pandas","Write a Python CLI script to process gene expression data with associated sequence information.
+
+Input files:
+- expression.csv: rows=samples, columns=genes, values=expression levels (TPM)
+- sequences....",0
+S007_data_viz,data_viz,neuroscience,easy,real,"numpy, pandas","Write a Python CLI script to visualize neural population activity data.
+
+Input: A CSV file with columns: trial, time, and multiple neuron columns (neuron_0, neuron_1, ...) containing firing rates.
+
+Re...",0
+S008_materials_qa,materials_qa,materials_science,medium,real,,"Write a Python CLI script to validate and clean a materials science training dataset stored as JSONL (one JSON per line).
+
+Each line has fields: instruction, input, output, source, category.
+
+Requirem...",0
+S009_earth_obs,earth_obs,earth_science,easy,real,"numpy, pandas","Write a Python CLI script to merge and align multiple Earth observation station CSV files into a single dataset.
+
+Input: A directory containing CSV files, each from a different weather station. Each C...",0
+S010_multimodal,multimodal,life_science,hard,real,"PIL, numpy, pandas","Write a Python CLI script to preprocess a multimodal biology dataset for model training.
+
+Input directory structure:
+- images/: contains .jpg files
+- texts/: contains .txt files (one per sample, match...",0
+S011_particle_physics,particle_physics,physics,medium,synthetic,"numpy, pandas","Write a Python CLI script to analyze particle collision event data from a high-energy physics experiment.
+
+Input: A CSV file where each row is a collision event with columns:
+- event_id, n_tracks, tot...",0
+S012_uv_spectroscopy,uv_spectroscopy,chemistry,medium,synthetic,"numpy, pandas","Write a Python CLI script to detect and analyze peaks in UV-Vis absorption spectroscopy data.
+
+Input: A CSV file with columns: wavelength (nm), absorbance. May contain multiple samples as additional c...",0
+S013_biodiversity,biodiversity,ecology,easy,synthetic,"numpy, pandas","Write a Python CLI script to calculate biodiversity indices from a species abundance matrix.
+
+Input: A CSV file where rows are sampling sites and columns are species. Values are individual counts.
+
+Re...",0
+S014_clinical_lab,clinical_lab,medical,easy,synthetic,"numpy, pandas","Write a Python CLI script to normalize and flag clinical laboratory test results.
+
+Input: A CSV with columns: patient_id, test_name, value, unit, reference_low, reference_high, timestamp.
+
+Requirement...",0
+S015_light_curves,light_curves,astronomy,hard,synthetic,"numpy, pandas","Write a Python CLI script to analyze astronomical light curves and detect periodic variability.
+
+Input: A CSV file with columns: time (days), magnitude, magnitude_error, filter_band.
+
+Requirements:
+1....",0
+S016_fastq_qc,fastq_qc,genomics,medium,synthetic,numpy,"Write a Python CLI script to compute quality statistics and perform quality trimming on FASTQ sequencing data.
+
+Input: A FASTQ file (text format with 4 lines per read: @header, sequence, +, quality).
+...",0
+S017_ctd_ocean,ctd_ocean,oceanography,medium,synthetic,"numpy, pandas","Write a Python CLI script to process CTD (Conductivity-Temperature-Depth) oceanographic profile data.
+
+Input: A CSV file with columns: station_id, depth_m, temperature_C, salinity_PSU, dissolved_oxyge...",0
+S018_radiosonde,radiosonde,atmospheric_science,medium,synthetic,"numpy, pandas","Write a Python CLI script to analyze radiosonde atmospheric sounding profile data.
+
+Input: A CSV file with columns: pressure (hPa), temperature (°C), dewpoint (°C), wind_speed (m/s), wind_direction (d...",0
+S019_eeg_filtering,eeg_filtering,signal_processing,medium,synthetic,"numpy, pandas, scipy","Write a Python CLI script to filter and analyze multi-channel EEG (electroencephalogram) signals.
+
+Input: A CSV file with columns: time (seconds), ch1, ch2, ..., ch8 (8 EEG channels in microvolts).
+Th...",0
+S020_survey_analysis,survey_analysis,social_science,easy,synthetic,"numpy, pandas","Write a Python CLI script to recode and analyze Likert-scale survey responses.
+
+Input: A CSV file with columns: respondent_id, age, gender (M/F/Other), q1 through q10 (integer values 1-5 representing ...",0
+S021_air_quality,air_quality,environmental_science,easy,synthetic,"numpy, pandas","Write a Python CLI script to compute Air Quality Index (AQI) from hourly pollutant measurements.
+
+Input: A CSV file with columns: timestamp (YYYY-MM-DD HH:MM:SS), pm25 (µg/m³), pm10 (µg/m³), o3 (ppb),...",0
+S022_well_log,well_log,geology,medium,synthetic,"numpy, pandas","Write a Python CLI script to resample borehole well log data and classify lithology from crossplot rules.
+
+Input: A CSV file with columns: depth, gamma_ray, resistivity, neutron_porosity, bulk_density...",0
+S023_epidemic_curve,epidemic_curve,epidemiology,medium,synthetic,"numpy, pandas","Write a Python CLI script to analyze disease outbreak case report data and produce epidemic curve statistics.
+
+Input: A CSV file with columns: case_id, onset_date (YYYY-MM-DD), age, gender (M/F), loca...",0
+S024_xrd_peaks,xrd_peaks,materials_science,hard,synthetic,"numpy, pandas","Write a Python CLI script to analyze X-ray diffraction (XRD) patterns: subtract background, detect peaks, fit Gaussians, and compute d-spacings.
+
+Input: A CSV file with columns: two_theta (degrees), i...",0
+S025_citation_graph,citation_graph,network_science,medium,synthetic,"numpy, pandas","Write a Python CLI script to analyze a citation network graph and compute node-level and network-level metrics.
+
+Input: Two CSV files:
+- Edges CSV (--edges): columns source_id, target_id, year (a cita...",0
+S026_earthquake_catalog,earthquake_catalog,seismology,medium,synthetic,"numpy, pandas","Write a Python CLI script to analyze an earthquake catalog and identify aftershock sequences.
+
+Input: A CSV file with columns:
+- event_id, datetime, latitude, longitude, depth_km, magnitude, mag_type
+...",0
+S027_crop_features,crop_features,agricultural_science,easy,synthetic,"numpy, pandas","Write a Python CLI script to compute crop yield prediction features from field observation data.
+
+Input: A CSV file with columns:
+- field_id, date (YYYY-MM-DD), ndvi, soil_moisture, temperature, rainf...",0
+S028_audio_features,audio_features,psychoacoustics,medium,synthetic,"numpy, pandas","Write a Python CLI script to extract audio features from synthetic audio signals stored as numpy arrays.
+
+Input: A .npz file containing:
+- signals: 2D array (n_signals x n_samples), each row is an aud...",0
+S029_flood_frequency,flood_frequency,hydrology,medium,synthetic,"numpy, pandas","Write a Python CLI script to analyze daily streamflow records and perform flood frequency analysis.
+
+Input: A CSV file with columns:
+- date (YYYY-MM-DD), discharge_cms (cubic meters per second), stati...",0
+S030_fossil_morpho,fossil_morpho,paleontology,easy,synthetic,"numpy, pandas","Write a Python CLI script to perform morphometric analysis on fossil specimen measurements.
+
+Input: A CSV file with columns:
+- specimen_id, taxon, length_mm, width_mm, height_mm, mass_g, formation, ep...",0
+S031_galaxy_morphology,galaxy_morphology,astronomy,medium,synthetic,,"# Galaxy Morphology Classification from Photometric Catalog
+
+Create a CLI script that classifies galaxy morphology using photometric catalog data. Your script should process synthetic galaxy observati...",0
+S032_stellar_spectra,stellar_spectra,astronomy,hard,synthetic,,"# Stellar Spectra Classification and Normalization
+
+Create a command-line tool that processes synthetic stellar spectra data to perform normalization and spectral type classification. Your script shou...",0
+S033_exoplanet_transit,exoplanet_transit,astronomy,medium,synthetic,,"# Exoplanet Transit Detection and Fitting
+
+Create a CLI script that detects and fits exoplanet transit signals in synthetic photometric time series data.
+
+Your script should accept the following argum...",0
+S034_quasar_variability,quasar_variability,astronomy,medium,synthetic,,"# Quasar Variability Analysis Tool
+
+Create a CLI script that analyzes optical variability in quasar light curves from survey data. Quasars are highly variable astronomical objects, and characterizing ...",0
+S035_pulsar_timing,pulsar_timing,astronomy,hard,synthetic,,"# Pulsar Timing Analysis and Dispersion Measure Computation
+
+Create a CLI script that processes pulsar timing observations to compute timing residuals and derive dispersion measure corrections. This t...",0
+S036_cmb_power_spectrum,cmb_power_spectrum,astronomy,medium,synthetic,,"# CMB Angular Power Spectrum Analysis
+
+Create a command-line tool that computes the angular power spectrum from Cosmic Microwave Background (CMB) temperature maps using spherical harmonic analysis.
+
+T...",0
+S037_asteroid_orbit,asteroid_orbit,astronomy,easy,synthetic,,"# Asteroid Orbital Elements Calculator
+
+Create a CLI script that computes basic orbital elements for asteroids from simulated position observations.
+
+## Background
+Asteroids follow elliptical orbits a...",0
+S038_solar_flare,solar_flare,astronomy,easy,synthetic,,"# Solar Flare Detection and Classification
+
+Create a CLI script that detects and classifies solar flare events from synthetic X-ray light curve data.
+
+Solar flares are sudden releases of electromagnet...",0
+S039_pdb_parser,pdb_parser,protein_structure,easy,synthetic,,"# PDB Structure Parser and Residue Statistics
+
+Create a command-line tool that parses synthetic PDB (Protein Data Bank) structure data and computes residue-level statistics for protein analysis.
+
+## T...",0
+S040_contact_map,contact_map,protein_structure,medium,synthetic,,"# Protein Contact Map Generator
+
+Create a CLI script that generates residue contact maps from protein atomic coordinates. Contact maps are binary matrices indicating which amino acid residues are in c...",0
+S041_secondary_structure,secondary_structure,protein_structure,medium,synthetic,,"# Secondary Structure Assignment from Backbone Dihedral Angles
+
+Create a CLI script that assigns secondary structure elements to protein residues based on their backbone dihedral angles (phi and psi)....",0
+S042_binding_site,binding_site,protein_structure,hard,synthetic,,"# Protein Binding Site Prediction from Surface Analysis
+
+Create a CLI tool that identifies potential ligand binding sites on protein surfaces using geometric and physicochemical analysis. The tool sho...",0
+S043_rmsd_alignment,rmsd_alignment,protein_structure,medium,synthetic,,"# Protein Structure RMSD Alignment Tool
+
+Create a command-line tool that performs structural alignment of protein conformations and computes Root Mean Square Deviation (RMSD) values.
+
+Your script shou...",0
+S044_bfactor_analysis,bfactor_analysis,protein_structure,easy,synthetic,,"# B-Factor Analysis Tool
+
+Create a command-line tool that analyzes B-factor (temperature factor) distributions in protein structures and identifies flexible regions. B-factors indicate atomic displace...",0
+S045_ramachandran,ramachandran,protein_structure,medium,synthetic,,"# Ramachandran Plot Analysis Tool
+
+Create a CLI tool that generates synthetic protein backbone dihedral angle data, creates Ramachandran plots, and identifies structural outliers.
+
+The Ramachandran pl...",0
+S046_disulfide_bonds,disulfide_bonds,protein_structure,hard,synthetic,,"# Disulfide Bond Detection and Validation
+
+Create a CLI script that analyzes protein structures to detect and validate disulfide bonds between cysteine residues based on atomic distances and geometric...",0
+S047_vcf_filter,vcf_filter,genomics,medium,synthetic,,"# VCF Variant Quality Filter
+
+Create a command-line tool that filters and annotates VCF (Variant Call Format) variant calls based on quality metrics and allele frequencies.
+
+Your script should accept ...",0
+S048_gene_ontology,gene_ontology,genomics,easy,synthetic,,"# Gene Ontology Enrichment Analysis
+
+Create a command-line tool that performs Gene Ontology (GO) enrichment analysis on a list of genes. The script should map genes to GO terms and calculate enrichmen...",0
+S049_rna_seq_counts,rna_seq_counts,genomics,medium,synthetic,,"# RNA-seq Count Matrix Normalization
+
+Create a command-line tool that normalizes RNA-seq count matrices using TPM (Transcripts Per Million) and DESeq2-style normalization methods.
+
+Your script should ...",0
+S050_snp_ld,snp_ld,genomics,hard,synthetic,,"# SNP Linkage Disequilibrium Analysis
+
+Create a command-line tool that computes linkage disequilibrium (LD) statistics between pairs of Single Nucleotide Polymorphisms (SNPs) from genotype data.
+
+Your...",0
+S051_primer_design,primer_design,genomics,easy,synthetic,,"# PCR Primer Design Tool
+
+Create a command-line tool that designs PCR primers for given DNA sequences with specified melting temperature (Tm) and GC content constraints.
+
+Your script should accept the...",0
+S052_phylogenetic_distance,phylogenetic_distance,genomics,medium,synthetic,,"# Phylogenetic Distance Calculator
+
+Create a command-line tool that computes pairwise phylogenetic distances from multiple sequence alignments using various distance metrics commonly used in phylogene...",0
+S053_methylation_beta,methylation_beta,genomics,hard,synthetic,,"# DNA Methylation Beta-Value Analysis and DMR Detection
+
+Create a command-line tool that processes DNA methylation beta-value arrays to identify differentially methylated regions (DMRs) between case a...",0
+S054_species_accumulation,species_accumulation,ecology,easy,synthetic,,"# Species Accumulation Curve Analysis
+
+Create a CLI script that computes and analyzes species accumulation curves from ecological sampling data. Species accumulation curves show how the cumulative num...",0
+S055_population_dynamics,population_dynamics,ecology,medium,synthetic,,"# Population Dynamics Modeling with Lotka-Volterra Equations
+
+Create a CLI script that fits the Lotka-Volterra predator-prey model to time series data and generates population dynamics predictions.
+
+T...",0
+S056_habitat_suitability,habitat_suitability,ecology,medium,synthetic,,"# Habitat Suitability Index Calculator
+
+Create a CLI script that calculates habitat suitability indices for species based on multiple environmental variables. The script should process synthetic envir...",0
+S057_beta_diversity,beta_diversity,ecology,medium,synthetic,,"# Beta Diversity Analysis Tool
+
+Create a command-line tool that computes beta diversity metrics between ecological sampling sites. Beta diversity measures the variation in species composition between ...",0
+S058_mark_recapture,mark_recapture,ecology,easy,synthetic,,"# Mark-Recapture Population Estimation
+
+Create a CLI script that estimates wildlife population sizes using mark-recapture data. This classic ecological method involves capturing animals, marking them,...",0
+S059_trophic_network,trophic_network,ecology,medium,synthetic,,"# Trophic Network Analysis Tool
+
+Create a command-line tool that analyzes food web structure and computes trophic levels from predator-prey interaction data.
+
+Your script should accept a CSV file cont...",0
+S060_phenology_shifts,phenology_shifts,ecology,hard,synthetic,,"# Phenological Shift Detection Analysis
+
+Create a CLI script that analyzes long-term ecological observation data to detect and quantify phenological shifts - changes in the timing of recurring biologi...",0
+S061_argo_profiles,argo_profiles,oceanography,medium,synthetic,,"# Argo Float Profile Analysis
+
+Create a CLI script that processes Argo float temperature and salinity profiles to compute mixed layer depth and generate oceanographic analysis outputs.
+
+Argo floats ar...",0
+S062_wave_spectrum,wave_spectrum,oceanography,medium,synthetic,,"# Ocean Wave Frequency Spectrum Analysis
+
+Create a CLI script that processes synthetic ocean buoy data to compute and analyze wave frequency spectra. Ocean buoys measure sea surface elevation over tim...",0
+S063_tidal_analysis,tidal_analysis,oceanography,easy,synthetic,,"# Tidal Harmonic Analysis Tool
+
+Create a command-line tool that performs basic harmonic analysis on synthetic tidal height data to identify dominant tidal constituents and their characteristics.
+
+Your...",0
+S064_sea_surface_temp,sea_surface_temp,oceanography,easy,synthetic,,"# Sea Surface Temperature Anomaly Analysis
+
+Create a CLI script that processes satellite-derived sea surface temperature (SST) data to compute temperature anomalies and generate summary statistics.
+
+Y...",0
+S065_chlorophyll_bloom,chlorophyll_bloom,oceanography,medium,synthetic,,"# Chlorophyll Bloom Detection Analysis
+
+Create a CLI script that analyzes chlorophyll-a concentration time series data to detect and characterize phytoplankton bloom events in marine ecosystems.
+
+Your...",0
+S066_acoustic_doppler,acoustic_doppler,oceanography,hard,synthetic,,"# ADCP Velocity Profile Quality Control and Analysis
+
+Create a CLI script that processes Acoustic Doppler Current Profiler (ADCP) velocity data to identify and remove bad measurements, then compute oc...",0
+S067_salinity_gradient,salinity_gradient,oceanography,hard,synthetic,,"# Estuarine Salinity Gradient Analysis from CTD Transects
+
+Create a CLI script that analyzes salinity gradients in estuarine environments using Conductivity-Temperature-Depth (CTD) transect data. The ...",0
+S068_weather_fronts,weather_fronts,atmospheric,medium,synthetic,,"# Weather Front Detection from Temperature Gradient Analysis
+
+Create a CLI script that detects weather fronts by analyzing temperature gradients in atmospheric data. Weather fronts are boundaries betw...",0
+S069_rainfall_extreme,rainfall_extreme,atmospheric,easy,synthetic,,"# Rainfall Return Period Analysis
+
+Create a CLI script that analyzes daily precipitation data to compute rainfall return periods and identify extreme precipitation events.
+
+Your script should accept d...",0
+S070_wind_rose,wind_rose,atmospheric,easy,synthetic,,"# Wind Rose Statistics Generator
+
+Create a CLI script that processes meteorological wind data to generate wind rose statistics and visualizations. Wind roses are circular plots that show the frequency...",0
+S071_visibility_analysis,visibility_analysis,atmospheric,medium,synthetic,,"# Atmospheric Visibility Analysis and Fog Frequency Calculator
+
+Create a CLI script that analyzes atmospheric visibility data to compute fog frequency statistics and identify visibility trends. The sc...",0
+S072_ozone_profile,ozone_profile,atmospheric,medium,synthetic,,"# Atmospheric Ozone Profile Analysis
+
+Create a CLI script that processes vertical ozone profiles from ozonesonde balloon measurements and generates standardized analysis outputs.
+
+Ozonesondes are ball...",0
+S073_lightning_density,lightning_density,atmospheric,medium,synthetic,,"# Lightning Flash Density Analysis
+
+Create a CLI script that processes lightning stroke data to generate flash density maps and statistical summaries for atmospheric research.
+
+Lightning detection net...",0
+S074_heat_index,heat_index,atmospheric,hard,synthetic,,"# Heat Index Analysis and Heat Wave Detection
+
+Create a CLI script that processes atmospheric temperature and humidity data to calculate heat index time series and identify heat wave events with stati...",0
+S075_tensile_curves,tensile_curves,materials,easy,synthetic,,"# Tensile Test Curve Analysis
+
+Create a CLI script that processes tensile test stress-strain data and extracts key mechanical properties from the curves.
+
+Your script should accept tensile test data c...",0
+S076_thermal_analysis,thermal_analysis,materials,medium,synthetic,,"# Thermal Analysis: DSC Curve Processing
+
+Create a command-line tool that processes Differential Scanning Calorimetry (DSC) thermal analysis data to perform baseline correction and detect thermal tran...",0
+S077_grain_size,grain_size,materials,easy,synthetic,,"# Grain Size Distribution Analysis
+
+Create a CLI script that analyzes grain size measurements from materials science image analysis and computes statistical distributions.
+
+Your script should accept g...",0
+S078_fatigue_life,fatigue_life,materials,medium,synthetic,,"# Fatigue Life Analysis Tool
+
+Create a command-line tool that analyzes fatigue test data to fit S-N (stress-number of cycles) curves and predict fatigue life for materials under cyclic loading.
+
+The S...",0
+S079_crystal_symmetry,crystal_symmetry,materials,medium,synthetic,,"# Crystal System Classification from Unit Cell Parameters
+
+Create a CLI script that determines the crystal system of materials based on their unit cell parameters. Crystal systems are fundamental clas...",0
+S080_impedance_spectroscopy,impedance_spectroscopy,materials,hard,synthetic,,"# Electrochemical Impedance Spectroscopy Circuit Fitting
+
+Create a CLI script that fits equivalent circuit models to electrochemical impedance spectroscopy (EIS) data and analyzes the quality of diffe...",0
+S081_hardness_mapping,hardness_mapping,materials,hard,synthetic,,"# Hardness Mapping from Indentation Data
+
+Create a CLI script that processes hardness indentation measurements and generates 2D hardness maps using advanced interpolation techniques.
+
+Your script shou...",0
+S082_ecg_qrs_detect,ecg_qrs_detect,medical,medium,synthetic,,"# ECG QRS Complex Detection and Heart Rate Variability Analysis
+
+Create a CLI script that detects QRS complexes in ECG signals and computes heart rate variability (HRV) metrics. The script should proc...",0
+S083_survival_analysis,survival_analysis,medical,medium,synthetic,,"# Kaplan-Meier Survival Analysis CLI Tool
+
+Create a command-line tool that performs Kaplan-Meier survival analysis on patient data and generates comprehensive survival statistics and visualizations.
+
+...",0
+S084_dose_response,dose_response,medical,easy,synthetic,,"# Dose-Response Curve Analysis
+
+Create a CLI script that analyzes dose-response data to fit sigmoidal curves and compute IC50/EC50 values. This is a common task in pharmacology and toxicology for dete...",0
+S085_spirometry_flow,spirometry_flow,medical,easy,synthetic,,"# Spirometry Flow-Volume Analysis
+
+Create a CLI script that processes spirometry flow-volume data and computes key pulmonary function parameters.
+
+Spirometry is a common pulmonary function test that m...",0
+S086_blood_cell_count,blood_cell_count,medical,medium,synthetic,,"# Blood Cell Count Analysis Tool
+
+Create a CLI tool that processes complete blood count (CBC) data to normalize values and flag abnormal results based on reference ranges.
+
+Your script should accept C...",0
+S087_drug_interaction,drug_interaction,medical,medium,synthetic,,"# Drug Interaction Analysis Tool
+
+Create a CLI script that analyzes prescription data to identify potential drug interactions and generate safety reports.
+
+Your script should accept prescription data ...",0
+S088_dicom_metadata,dicom_metadata,medical,hard,synthetic,,"# DICOM Metadata Extraction and Validation Tool
+
+Create a CLI tool that processes synthetic DICOM-like medical imaging metadata to extract, validate, and analyze patient and study information across m...",0
+S089_vibration_analysis,vibration_analysis,signal_processing,medium,synthetic,,"# Vibration Spectrum Analysis for Fault Detection
+
+Create a CLI tool that analyzes machine vibration data to detect potential faults by examining frequency domain characteristics and harmonic patterns...",0
+S090_noise_reduction,noise_reduction,signal_processing,medium,synthetic,,"# Adaptive Noise Cancellation for Audio Signals
+
+Create a CLI script that implements adaptive noise cancellation on synthetic audio signals using the Least Mean Squares (LMS) algorithm. The script sho...",0
+S091_modulation_classify,modulation_classify,signal_processing,hard,synthetic,,"# Digital Modulation Classification from IQ Samples
+
+Create a CLI script that classifies digital modulation schemes from in-phase and quadrature (IQ) sample data. Your script should analyze complex-va...",0
+S092_chirp_detection,chirp_detection,signal_processing,easy,synthetic,,"# Chirp Signal Detection in Spectrograms
+
+Create a CLI script that detects chirp signals (frequency-sweeping signals) in noisy time-frequency spectrograms. Chirp signals are characterized by their lin...",0
+S093_echo_removal,echo_removal,signal_processing,medium,synthetic,,"# Echo Removal from Audio Signals
+
+Create a CLI script that removes echo artifacts from synthetic audio recordings using digital signal processing techniques.
+
+Your script should implement an adaptive...",0
+S094_spectral_leakage,spectral_leakage,signal_processing,hard,synthetic,,"# Spectral Leakage Analysis and Correction Tool
+
+Create a CLI tool that analyzes spectral leakage effects in frequency domain analysis and applies windowing functions to minimize artifacts. The tool s...",0
+S095_sentiment_score,sentiment_score,social_science,easy,synthetic,,"# Sentiment Score Analysis for Survey Responses
+
+Create a CLI script that analyzes sentiment scores for open-ended survey responses using a simple lexicon-based approach. Your script should process sy...",0
+S096_network_influence,network_influence,social_science,medium,synthetic,,"# Social Network Influence Analysis
+
+Create a CLI script that analyzes social network interaction data to identify influential users and compute network influence metrics.
+
+Your script should process ...",0
+S097_topic_frequency,topic_frequency,social_science,easy,synthetic,,"# Topic Frequency Analysis
+
+Create a CLI script that analyzes topic frequency trends from a timestamped document corpus. The script should process synthetic document data and compute how frequently di...",0
+S098_gini_coefficient,gini_coefficient,social_science,medium,synthetic,,"# Income Inequality Analysis Tool
+
+Create a command-line tool that calculates the Gini coefficient and generates a Lorenz curve from income distribution data. The Gini coefficient is a measure of stat...",0
+S099_mobility_patterns,mobility_patterns,social_science,medium,synthetic,,"# Urban Mobility Pattern Analysis
+
+Create a CLI script that analyzes urban mobility patterns from anonymized trip data to identify commuting behaviors, popular destinations, and temporal movement tren...",0
+S100_election_forecast,election_forecast,social_science,hard,synthetic,,"# Election Forecast Aggregator
+
+Create a CLI script that aggregates polling data and generates weighted election forecasts using advanced statistical methods.
+
+Your script should accept polling data t...",0
