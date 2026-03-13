@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="figures/cover_double_edged_sword.jpg" width="480">
+
 # Skill-Double-Edge
 
 ### Skills Are a Double-Edged Sword for LLM Code Generation
@@ -19,6 +21,8 @@
 ---
 
 ## The Seven Paradoxes
+
+<img src="figures/hero_angel_devil.jpg" width="600">
 
 Our experiments reveal a series of counter-intuitive findings about how LLM skills actually work:
 
@@ -47,6 +51,8 @@ Our experiments reveal a series of counter-intuitive findings about how LLM skil
 - **L1 (just SKILL.md text) captures most of the gain** — scripts and references provide diminishing returns
 
 ### RQ2: How tolerant are models to skill errors?
+
+<img src="figures/hero_import_fortress.jpg" width="500">
 
 <img src="figures/fig_rq2_tolerance.png" width="700">
 
@@ -198,6 +204,8 @@ cat tools/requirement-to-skill/SKILL.md  # How the skill generator works
 ---
 
 ## Practical Takeaways
+
+<img src="figures/hero_checklist.jpg" width="400">
 
 **For skill/prompt designers:**
 1. **SKILL.md alone gets you 80% of the benefit** — invest in clear text first
