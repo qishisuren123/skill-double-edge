@@ -8,9 +8,8 @@
 [![Trials](https://img.shields.io/badge/Trials-1%2C620-blue.svg)](#experiment-design)
 [![Models](https://img.shields.io/badge/Models-6-orange.svg)](#experiment-design)
 [![Scenarios](https://img.shields.io/badge/Scenarios-30-purple.svg)](#experiment-design)
-[![Cost](https://img.shields.io/badge/Cost-%24129-red.svg)](#experiment-design)
 
-*We spent $129 running 1,620 controlled experiments across 6 LLMs and found:*
+*1,620 controlled experiments across 6 LLMs reveal:*
 
 **Skills help weak models gain +18pp — but the exact same skills make them lose -100pp in other scenarios.**
 **Strong models are immune to skills — but most vulnerable to skill poisoning.**
@@ -93,7 +92,6 @@ In Claude Code and similar AI coding tools, a **skill** is a structured knowledg
 | **Scenarios** | 30 scientific computing tasks across 15+ domains |
 | **Conditions** | 15 (5 skill levels + 6 mutation types + 4 robustness conditions) |
 | **Total Trials** | 1,620 |
-| **Total Cost** | $129.05 |
 | **Evaluation** | Automated test suites: 5–15 assertions per scenario |
 | **Temperature** | 0.0 (deterministic) |
 | **Seed** | 42 (for mutations) |
@@ -178,7 +176,7 @@ python run_benchmark.py --rq rq1 --models haiku,gpt4o \
     --scenarios S002_spike_behavior,S012_uv_spectroscopy \
     --api-base "https://api.anthropic.com" --api-key "$KEY"
 
-# Full reproduction (~$130)
+# Full reproduction
 python run_benchmark.py --rq all --api-base "..." --api-key "..."
 ```
 
@@ -253,7 +251,7 @@ MIT — see [LICENSE](LICENSE).
 
 ## LLM 技能包是一把双刃剑
 
-我们花了 **$129** 运行了 **1,620 组对照实验**，发现了一系列关于 LLM 技能包的反直觉结论：
+我们运行了 **1,620 组对照实验**，发现了一系列关于 LLM 技能包的反直觉结论：
 
 ### 七个悖论
 
